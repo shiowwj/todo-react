@@ -1,17 +1,106 @@
 body{
-	background-color: yellow;
+	background-color: #29292A;
+
 }
 
-.table-main{
+h1{
+		color:#DCDCDC;
+}
+
+table{
 	margin-top:20px;
-	width:600px;
-
+	width:100%;
+	color:#DCDCDC;
+	/*text-align: center;*/
 }
 
-#table-head{
-
+table, th, td {
+  border-bottom: 1px solid grey;
 }
 
+th {
+	height: 50px;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+}
 .warning{
-	border: 10px solid red;
+	border: 3px solid red;
+}
+
+.input-container{
+	border-top: 1px solid white;
+	margin-top:20px;
+	padding-top: 20px;
+	display:block;
+	text-align: center;
+}
+
+
+.input-box{
+	text-align: center;
+	height: 65px;
+	width: 800px;
+	border-radius: 15px;
+	font-size:40px;
+
+}
+
+.button-input{
+	position: relative;
+	bottom: 8px;
+	background-color: #387FE8;
+	height: 60px;
+	width: 180px;
+	color:white;
+	border-radius: 10px;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.button-input:hover{
+	background-color: white;
+	color:black;
+}
+
+.delete-task-button{
+  margin: 0px 10px 10px 10px;
+	background-color: #CD594B;
+	color: black;
+	width: 50px;
+	height: 50px;
+	border-radius: 25px;
+	font-size:30px;
+}
+
+
+.edit-task-button{
+	margin: 0px 10px 10px 10px;
+	background-color: #E3A651;
+	color: black;
+	width: 50px;
+	height: 50px;
+	border-radius: 25px;
+	font-size:30px;
+}
+
+.done-task-button{
+	margin: 0px 10px 10px 10px;
+	background-color: #64A057;
+	color: black;
+	width: 50px;
+	height: 50px;
+	border-radius: 25px;
+	font-size:30px;
+}
+
+
+.table-head{
+	font-size:30px;
+}
+
+.table-row{
+	font-size:50px;
 }
