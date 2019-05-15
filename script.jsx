@@ -62,14 +62,14 @@ class List extends React.Component {
     }
     //triggers when things are typed and only submits when conditions are met
     formInput=(e)=>{
-        if(e.keyCode == 13 && (this.state.word.length >= 1 && this.state.word.length < 100)){
-            this.state.list.push(this.state.word)
-            this.setState(this);
+        if( e.keyCode == 13 && ( this.state.word.length >= 1 && this.state.word.length < 100 )){
+            this.state.list.push( this.state.word )
+            this.setState( this );
             e.target.value = '';
         }else{
             if(this.state.word.length > 100){
                 this.state.className = "warning";
-                this.setState({className: this.state.className})
+                this.setState( {className: this.state.className} )
             }
         }
 
@@ -77,10 +77,10 @@ class List extends React.Component {
 
         if(this.state.word.length > 100){
             this.state.className = "warning";
-            this.setState({className: this.state.className})
+            this.setState( {className: this.state.className} )
         }else{
             this.state.className = "";
-            this.setState({className: this.state.className})
+            this.setState( {className: this.state.className} )
         }
 
         // console.log("change", e.target.value);
@@ -89,26 +89,26 @@ class List extends React.Component {
 
     submitItem=(e)=>{
         // console.log('submit item?', this)
-        if(this.state.word.length >= 1 && this.state.word.length < 100 ){
-            this.state.list.push(this.state.word)
-            this.setState(this)
-            this.setState({word: ""});
+        if( this.state.word.length >= 1 && this.state.word.length < 100 ){
+            this.state.list.push( this.state.word )
+            this.setState( this )
+            this.setState( {word: ""} );
         } else {
-            if(this.state.word.length > 5){
+            if( this.state.word.length > 5 ){
                 this.state.className = "warning";
-                this.setState({className: this.state.className})
+                this.setState( {className: this.state.className} )
             }
         }
     }
 
     deleteItem=(f)=>{
 
-        this.state.list.splice(f.target.id,1)
-        this.setState({list:this.state.list})
+        this.state.list.splice( f.target.id , 1 )
+        this.setState( {list:this.state.list} )
     }
 
     editItem=(e)=>{
-
+asdf
     }
 
     render() {
