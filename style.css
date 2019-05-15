@@ -1,0 +1,17 @@
+body{
+	background-color: yellow;
+}
+
+.table-main{
+	margin-top:20px;
+	width:600px;
+
+}
+
+#table-head{
+
+}
+
+.warning{
+	border: 10px solid red;
+}
