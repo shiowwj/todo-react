@@ -2,7 +2,8 @@ class Clock extends React.Component{
     constructor(props){
         super(props);
         this.state ={
-            date: new Date(),
+            day: moment().format("MMM Do YYYY"),
+            date: moment().format('LTS'),
         }
     }
     //runs after the component output has been rendered to the DOM, triggers clock update. (sets a timer)
@@ -18,54 +19,17 @@ class Clock extends React.Component{
     //this will update clock by calling setState every second
     tick(){
         this.setState({
-            date: new Date()
+            day: moment().format("MMM Do YYYY"),
+            date: moment().format('LTS'),
         });
     }
 
     render(){
         return(
             <div className="clock-container">
-                <h2>{this.state.date.toLocaleTimeString('en-SG')}</h2>
+                <h2>{this.state.day}</h2>
+                <h2>{this.state.date}</h2>
             </div>
-        );
-    }
-}
-
-class TableOutPut extends React.Component{
-    constructor(){
-        super()
-    }
-
-    render(){
-        const listOutPut = this.props.listArr.map((item,index)=>{
-            return(
-                <tr className='table-row' key={index}>
-                    <td>#{index+1}</td>
-                    <td><h2>{item.task}</h2><br/> <h5>Created on: {item.created_at}</h5></td>
-                    <td><button className="delete-task-button" id={index} onClick={(e)=>{this.props.makeLove(e)}} >⤬</button>
-                        <button className="edit-task-button" id={index} onClick={(e)=>{this.props.fickleHead(e)}} >✎</button>
-                        <button className="done-task-button" id={index} onClick={(e)=>{this.props.makeLove(e)}} >✔️</button>
-                    </td>
-                </tr>
-
-            );
-        })
-
-        return(
-
-            <table className="table-main">
-
-                <thead className="table-main">
-                    <tr>
-                        <th className="table-head">No.</th>
-                        <th className="table-head">Items</th>
-                        <th className="table-head">Action</th>
-                    </tr>
-                </thead>
-                <tbody className="table-main">
-                    {listOutPut}
-                </tbody>
-            </table>
         );
     }
 }
@@ -78,6 +42,7 @@ class List extends React.Component {
             word : "",
             className:"input-box",
             removedList: [],
+            editWord: "",
         }
     }
     //triggers when things are typed and only submits when conditions are met
@@ -138,23 +103,64 @@ class List extends React.Component {
     }
 
     editItem=(e)=>{
-
+        console.log('edit form words', e.target.value)
+        this.state.editWord = e.target.value;
     }
 
     render() {
         // render the list with a map() here
-        console.log("rendering");
-        console.log(this.state.removedList);
+        // console.log("rendering");
+        // console.log(this.state.removedList);
         return (
             <div className="list">
                 <Form formInput={this.formInput} submitItem={this.submitItem} className={this.state.className} value={this.state.word}/>
-                <TableOutPut listArr={this.state.list} makeLove={this.deleteItem} fickleHead={this.editItem}/>
+                <TableOutPut listArr={this.state.list} makeLove={this.deleteItem} editFunc={this.editItem}/>
                 <DeletedItems listArr={this.state.removedList}/>
             </div>
         );
     }
 }
 
+class TableOutPut extends React.Component{
+    constructor(){
+        super()
+    }
+
+    render(){
+        let editState = {
+            editing:true,
+        }
+        const listOutPut = this.props.listArr.map((item,index)=>{
+            return(
+                <div className="table-row" key={index}>
+                    <div>
+                        <SingleTask index={index} task={item.task} created={item.created_at}/>
+                    </div>
+                    <div>
+                        <button className="done-task-button" id={index} onClick={(e)=>{this.props.makeLove(e)}} >✔️</button>
+                        <button className="edit-task-button" id={index} onClick={(e)=>{this.props.editFunc(e,index)}} >✎</button>
+                        <button className="delete-task-button" id={index} onClick={(e)=>{this.props.makeLove(e)}} >⤬</button>
+                    </div>
+                </div>
+            );
+        })
+
+        return(
+            <div >
+                {listOutPut}
+            </div>
+        );
+    }
+}
+class SingleTask extends React.Component{
+    render(){
+        return(
+            <div key={this.props.index}>
+                <p>#{this.props.index+1}</p><h2>{this.props.task}</h2><h5>{this.props.created}</h5>
+            </div>
+        );
+    }
+}
 class DeletedItems extends React.Component{
     constructor(){
         super()
@@ -162,29 +168,39 @@ class DeletedItems extends React.Component{
     render(){
         const listOutPut = this.props.listArr.map((item,index)=>{
             return(
-                <tr className='table-row' key={index}>
-                    <td>#{index+1}</td>
-                    <td><h2>{item.deleted}</h2><br/> <h5>Created on: {item.modified_at}</h5></td>
-                    <td>yo?</td>
-                </tr>
+                <div className="table-row" key={index}>
+                    <div>
+                        <p>#{index+1}</p><h3>{item.deleted}</h3><h5>Done on: {item.modified_at}</h5>
+                    </div>
+                </div>
             );
         })
         return(
             <div>
-            <h3>Removed Items</h3>
-            <table className="table-main">
-                <thead className="table-main">
-                    <tr>
-                        <th className="table-head">No.</th>
-                        <th className="table-head">Items</th>
-                        <th className="table-head">Action</th>
-                    </tr>
-                </thead>
-                <tbody className="table-main">
+            <h2>Removed Items</h2>
+                <div>
                     {listOutPut}
-                </tbody>
-            </table>
+                </div>
             </div>
+        );
+    }
+}
+
+class EditForm extends React.Component{
+    constructor(){
+        super()
+        this.state = {
+            editing: false,
+        };
+    }
+    render(){
+
+        console.log(this.props)
+        return (
+            <input
+            onChange={(e)=>{this.props.editSingleItem(e)}}
+            value={this.props.editValue}
+            />
         );
     }
 }
@@ -206,16 +222,12 @@ class Form extends React.Component{
     }
 }
 
-class App extends React.Component{
-    render(){
-        return(
-        <div>
-            <Clock/>
-            <List/>
-        </div>
-        );
-    }
-}
+const App =() =>(
+    <div>
+        <Clock/>
+        <List/>
+    </div>
+);
 
 ReactDOM.render(
     <App/>,
